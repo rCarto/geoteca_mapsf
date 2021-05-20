@@ -1,0 +1,100 @@
+---
+title: "Cartographie avec R, le package `mapsf`"
+author: "Timothée Giraud </br> </br> ![](img/logocnrs.svg)      ![](img/logoriate.png)</br>"
+date: "Géotéca - Paris - 2021/05/20"
+output: 
+  ioslides_presentation: 
+    css: libs/style.css
+    logo: img/logo.png
+    widescreen: yes
+---
+
+
+
+# [L'écosystème spatial de R](https://frama.link/rspatial2019)
+
+
+
+# Le package `mapsf`
+
+
+
+## Créer une carte
+
+La fonction `mf_map()` est la fonction principale du package :  
+
+
+```r 
+mf_map(x = objet_sf, 
+       var = "variable", 
+       type = "type de carte", 
+       ...)
+```
+
+
+## `mf_map()` {data-background=img/help.png data-background-size=contain}
+
+
+
+## Les types de cartes
+
+<div class="columns-2">
+  <img src="img/visu1.png" width=518px />
+  
+  <img src="img/visu2.png" width=523px />
+</div>
+
+
+## La mise en page
+<div class="columns-2"> 
+
+<img src="img/deco.svg" width=450px />  
+
+ 
+ 
+
+```r
+mf_title()
+mf_arrow()
+mf_credits()
+mf_scale() 	
+mf_layout() 
+mf_annotation() 	
+mf_label()
+mf_shadow()
+```
+
+</div>
+
+
+## https://riatelab.github.io/mapsf/
+
+[<img src="img/website.png" width=800px />](https://riatelab.github.io/mapsf/)
+
+
+
+
+## Les vignettes
+
+- [Introduction et exemples](https://riatelab.github.io/mapsf/articles/mapsf.html#examples-of-thematic-maps-1)
+- [Export des cartes](https://riatelab.github.io/mapsf/articles/web_only/how_to_export_maps.html)
+- [Les cartons ou *insets*](https://riatelab.github.io/mapsf/articles/web_only/how_to_create_inset_maps.html)
+- [Les thèmes](https://riatelab.github.io/mapsf/articles/web_only/how_to_use_themes.html)
+
+
+
+
+
+## Merci
+
+
+
+<img src="img/logo.png" width=50px />  [riatelab.github.io/mapsf/](https://riatelab.github.io/mapsf/)  
+</br>
+<img src="img/prlogo.png" width=50px />  [gitlab.huma-num.fr/rCarto/geoteca_mapsf](https://gitlab.huma-num.fr/rCarto/geoteca_mapsf)  
+</br>
+<img src="img/ghlogo.png" width=50px />  [github.com/riatelab/mapsf](https://github.com/riatelab/mapsf)  
+</br>
+<img src="img/twlogo.png" width=50px />  [\@rgeomatic](http://twitter.com/rgeomatic)  
+</br>
+<img src="img/hylogo.png" width=50px />  [rgeomatic.hypotheses.org](https://rgeomatic.hypotheses.org/)

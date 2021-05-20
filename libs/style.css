@@ -1,0 +1,9 @@
+slides > slide {
+  background-image:url(../img/back.png);
+  font-family: "Public Sans", Times, serif;
+}
+
+img { 
+  max-width:100%; 
+  height: auto; 
+}
