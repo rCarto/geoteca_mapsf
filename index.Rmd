@@ -9,15 +9,113 @@ output:
     widescreen: yes
 ---
 
+# Le package `sf`
+## 
+<img src="img/sf.gif" alt="sf gif" style="border:0px"/>  
+Une interface entre R et plusieurs librairies géographiques : 
+
+* [GDAL](http://www.gdal.org/), Geospatial Data Abstraction Library
+
+* [PROJ4](https://proj.org/), Coordinate Transformation Software
+
+* [GEOS](http://trac.osgeo.org/geos/), Geometry Engine - Open Source   
+
+## {.smaller}
+
+```{r, fig.align='center', echo=FALSE}
+knitr::include_graphics("img/sf_deps.png")
+```
 
 
-# [L'écosystème spatial de R](https://frama.link/rspatial2019)
+<font size="1">[Pebesma, 2019](https://github.com/edzer/UseR2019)</font>
 
+## 
+Format des objets spatiaux `sf`
+
+<img src="img/sf.png" alt="format sf" width=100% style="border:0px"/>
+
+## 
+Import de données
+```{r}
+library(sf)
+mtq <- st_read("data/martinique.shp")
+```
+
+##
+Affichage de données
+```{r, fig.height=4, fig.width=3, nm=TRUE}
+plot(st_geometry(mtq))
+```
+
+##
+Extraire les centroïdes
+```{r,  fig.height=4, fig.width=3, nm=TRUE}
+mtq_c <- st_centroid(mtq)
+plot(st_geometry(mtq))
+plot(st_geometry(mtq_c), add=TRUE, cex=1.2, col="red", pch=20)
+```
+
+##
+Construire une matrice de distances
+```{r,  fig.height=4, fig.width=3, nm=TRUE}
+mat <- st_distance(x=mtq_c,y=mtq_c)
+mat[1:5,1:5]
+```
+
+##
+Agréger des polygones
+```{r,  fig.height=4, fig.width=3, nm=TRUE}
+mtq_u <- st_union(mtq)
+plot(st_geometry(mtq), col="lightblue")
+plot(st_geometry(mtq_u), add=T, lwd=2, border = "red")
+```
+
+##
+Construire une zone tampon
+```{r,  fig.height=4, fig.width=3, nm=TRUE}
+mtq_b <- st_buffer(x = mtq_u, dist = 5000)
+plot(st_geometry(mtq), col="lightblue")
+plot(st_geometry(mtq_u), add=T, lwd=2)
+plot(st_geometry(mtq_b), add=T, lwd=2, border = "red")
+
+```
+
+
+##
+Réaliser une intersection 
+
+```{r,  fig.height=4, fig.width=3, nm=TRUE}
+m <- rbind(c(700015,1624212), c(700015,1641586), c(719127,1641586),
+           c(719127,1624212), c(700015,1624212))
+p <- st_sf(st_sfc(st_polygon(list(m))), crs = st_crs(mtq))
+plot(st_geometry(mtq))
+plot(p, border="red", lwd=2, add=T)
+```
+
+
+
+##
+Réaliser une intersection 
+
+```{r,  fig.height=4, fig.width=3, nm=TRUE, warning=F}
+mtq_z <- st_intersection(x = mtq, y = p)
+plot(st_geometry(mtq))
+plot(st_geometry(mtq_z), col="red", border="green", add=T)
+```
+
+##
+Construire des polygones de Voronoi  
+
+```{r,  fig.height=4, fig.width=3, nm=TRUE}
+mtq_v <- st_voronoi(x = st_union(mtq_c))
+mtq_v <- st_intersection(st_cast(mtq_v), st_union(mtq))
+mtq_v <- st_join(x = st_sf(mtq_v), y = mtq_c, join=st_intersects)
+mtq_v <- st_cast(mtq_v, "MULTIPOLYGON")
+plot(st_geometry(mtq_v), col='lightblue')
+```
 
 
 # Le package `mapsf`
-
-
 
 ## Créer une carte
 
@@ -91,7 +189,7 @@ mf_shadow()
 
 <img src="img/logo.png" width=50px />  [riatelab.github.io/mapsf/](https://riatelab.github.io/mapsf/)  
 </br>
-<img src="img/prlogo.png" width=50px />  [gitlab.huma-num.fr/rCarto/geoteca_mapsf](https://gitlab.huma-num.fr/rCarto/geoteca_mapsf)  
+<img src="img/prlogo.png" width=50px />  [github.com/rCarto/geoteca_mapsf](https://github.com/rCarto/geoteca_mapsf)  
 </br>
 <img src="img/ghlogo.png" width=50px />  [github.com/riatelab/mapsf](https://github.com/riatelab/mapsf)  
 </br>
